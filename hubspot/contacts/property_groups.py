@@ -15,6 +15,7 @@
 ##############################################################################
 
 from pyrecord import Record
+from six import text_type
 from voluptuous import Optional
 from voluptuous import Schema
 
@@ -35,7 +36,7 @@ PropertyGroup = Record.create_type(
 
 
 _PROPERTY_GROUP_CREATION_SCHEMA = Schema(
-    {'name': unicode, 'displayName': unicode},
+    {'name': text_type, 'displayName': text_type},
     required=True,
     extra=True,
     )
@@ -45,8 +46,8 @@ _PROPERTY_SCHEMA = {}
 
 _PROPERTY_GROUPS_RETRIEVAL_SCHEMA = Schema(
     [{
-        'name': unicode,
-        'displayName': unicode,
+        'name': text_type,
+        'displayName': text_type,
         Optional('properties'): [_PROPERTY_SCHEMA],
         }],
     required=True,

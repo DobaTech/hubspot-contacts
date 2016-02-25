@@ -14,6 +14,7 @@
 #
 ##############################################################################
 
+from six import text_type
 from voluptuous import All
 from voluptuous import Any
 from voluptuous import Length
@@ -29,14 +30,14 @@ _CANONICAL_IDENTITY_PROFILE_SCHEMA = All(
     [],
     AnyListItemValidates(
         Schema(
-            {'type': Constant(u'EMAIL'), 'value': unicode},
+            {'type': Constant(u'EMAIL'), 'value': text_type},
             required=True,
             extra=True,
             ),
         ),
     )
 
-_IS_PROPERTY_VALUE = Schema({'value': unicode}, required=True, extra=True)
+_IS_PROPERTY_VALUE = Schema({'value': text_type}, required=True, extra=True)
 
 
 _IDENTITY_PROFILE_SCHEMA = Schema(
@@ -50,7 +51,7 @@ CONTACT_SCHEMA = Schema(
     {
         'vid': int,
         'properties': DynamicDictionary(
-            unicode,
+            text_type,
             All(_IS_PROPERTY_VALUE, GetDictValue('value')),
             ),
         'identity-profiles': All([_IDENTITY_PROFILE_SCHEMA], Length(min=1)),

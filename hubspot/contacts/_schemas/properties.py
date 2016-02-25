@@ -14,6 +14,7 @@
 #
 ##############################################################################
 
+from six import text_type
 from voluptuous import Any
 from voluptuous import Schema
 
@@ -21,7 +22,7 @@ from hubspot.contacts.properties import PROPERTY_TYPE_BY_NAME
 
 
 _PROPERTY_RESPONSE_SCHEMA_DEFINITION = {
-    'name': unicode,
+    'name': text_type,
     'type': Any(*PROPERTY_TYPE_BY_NAME.keys()),
     'options': [],
     }
