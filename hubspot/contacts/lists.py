@@ -17,6 +17,7 @@
 from collections import defaultdict
 from decimal import Decimal
 from json import loads as json_deserialize
+from six import text_type
 
 from pyrecord import Record
 
@@ -46,7 +47,7 @@ _CONTACT_LIST_COLLECTION_URL_PATH = CONTACTS_API_SCRIPT_NAME + '/lists'
 
 
 _PROPERTY_VALUE_CONVERTER_BY_PROPERTY_TYPE = defaultdict(
-    lambda: unicode,
+    lambda: text_type,
     {
         BooleanProperty: json_deserialize,
         DateProperty: convert_timestamp_in_milliseconds_to_date,

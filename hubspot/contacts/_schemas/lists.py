@@ -1,8 +1,9 @@
 from voluptuous import Schema
+from six import text_type
 
 
 CONTACT_LIST_SCHEMA = Schema(
-    {'listId': int, 'name': unicode, 'dynamic': bool},
+    {'listId': int, 'name': text_type, 'dynamic': bool},
     required=True,
     extra=True,
     )

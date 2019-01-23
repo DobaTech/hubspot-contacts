@@ -19,6 +19,7 @@ from datetime import datetime
 from decimal import Decimal
 from decimal import InvalidOperation
 from json import dumps as json_serialize
+from six import text_type
 
 from hubspot.contacts.exc import HubspotPropertyValueError
 from hubspot.contacts.generic_utils import \
@@ -73,7 +74,7 @@ def _serialize_property_value(property_value, property_type):
     else:
         converter = _PROPERTY_VALUE_CONVERTER_BY_PROPERTY_TYPE[property_type]
         property_value_cast = converter(property_value)
-        property_value_serialized = unicode(property_value_cast)
+        property_value_serialized = text_type(property_value_cast)
     return property_value_serialized
 
 

@@ -17,6 +17,7 @@
 from pyrecord import Record
 from voluptuous import Optional
 from voluptuous import Schema
+from six import text_type
 
 from hubspot.contacts._constants import CONTACTS_API_SCRIPT_NAME
 from hubspot.contacts._schemas.properties import \
@@ -35,15 +36,15 @@ PropertyGroup = Record.create_type(
 )
 
 _PROPERTY_GROUP_CREATION_SCHEMA = Schema(
-    {'name': unicode, 'displayName': unicode},
+    {'name': text_type, 'displayName': text_type},
     required=True,
     extra=True,
 )
 
 _PROPERTY_GROUPS_RETRIEVAL_SCHEMA = Schema(
     [{
-        'name': unicode,
-        'displayName': unicode,
+        'name': text_type,
+        'displayName': text_type,
         Optional('properties'): [PROPERTY_RESPONSE_SCHEMA_DEFINITION],
     }],
     required=True,

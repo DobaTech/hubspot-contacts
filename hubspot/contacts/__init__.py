@@ -26,7 +26,7 @@ from hubspot.contacts.request_data_formatters.contacts import \
     format_contacts_data_for_saving
 
 
-Contact = Record.create_type(
+_Contact = Record.create_type(
     'Contact',
     'vid',
     'email_address',
@@ -34,6 +34,29 @@ Contact = Record.create_type(
     'related_contact_vids',
     related_contact_vids=(),
     )
+
+
+class Contact(_Contact):
+    """ See _Contact for all key information.
+
+    We subclassed _Contact merely so we could add in some hashability which is
+    used a fair bit during testing.  Python 2.7 supported hashing these
+    records, python 3 does not, so we have to define some methods to get
+    python 3 compatibility.
+    """
+    def __hash__(self):
+        return hash(self.vid) ^ hash(self.email_address) ^ hash(frozenset(self.properties.items()))
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.vid == other.vid and \
+                self.email_address == other.email_address and \
+                self.properties == self.properties
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 
 _CONTACTS_SAVING_URL_PATH = CONTACTS_API_SCRIPT_NAME + '/contact/batch/'

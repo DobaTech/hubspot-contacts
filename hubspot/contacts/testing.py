@@ -29,6 +29,7 @@ from datetime import datetime
 from functools import partial
 from json import dumps as json_serialize
 from math import ceil
+from six import text_type
 
 from hubspot.connection.testing import APICall
 from hubspot.connection.testing import SuccessfulAPICall
@@ -274,7 +275,7 @@ class GetAllContacts(_PaginatedObjectsRetriever):
             property_value = \
                 convert_date_to_timestamp_in_milliseconds(property_value)
 
-        property_value = unicode(property_value)
+        property_value = text_type(property_value)
         return property_value
 
     @staticmethod

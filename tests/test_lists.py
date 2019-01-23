@@ -27,7 +27,7 @@ from itertools import islice
 from hubspot.connection.exc import HubspotClientError
 from hubspot.connection.exc import HubspotServerError
 from hubspot.connection.testing import MockPortalConnection
-from nose.tools import assert_items_equal
+from nose.tools import assert_equal
 from nose.tools import assert_not_in
 from nose.tools import assert_raises
 from nose.tools import assert_raises_regexp
@@ -105,7 +105,7 @@ class TestContactListsRetrieval(object):
 
     def test_getting_existing_contact_lists_multiple_pages(self):
         contact_lists = []
-        for index in xrange(0, BATCH_RETRIEVAL_SIZE_LIMIT + 1):
+        for index in range(0, BATCH_RETRIEVAL_SIZE_LIMIT + 1):
             contact_list = ContactList(
                 index,
                 'list{}'.format(index),
@@ -281,7 +281,7 @@ class _BaseContactListMembershipUpdateTestCase(object):
                 )
 
         expected_updated_contact_vids = _get_contact_vids(contacts)
-        assert_items_equal(expected_updated_contact_vids, updated_contact_vids)
+        assert_equal(expected_updated_contact_vids, updated_contact_vids)
 
     def _test_membership_update(
         self,
@@ -312,7 +312,7 @@ class _BaseContactListMembershipUpdateTestCase(object):
 
         expected_updated_contact_vids = \
             _get_contact_vids(expected_updated_contacts)
-        assert_items_equal(expected_updated_contact_vids, added_contact_vids)
+        assert_equal(set(expected_updated_contact_vids), set(added_contact_vids))
 
     @abstractmethod
     def _calculate_updated_contacts(
@@ -633,7 +633,7 @@ class _BaseGettingContactsTestCase(object):
 
     def test_simulator_type_casting(self):
         enumeration_property_value = \
-            STUB_ENUMERATION_PROPERTY.options.values()[0]
+            list(STUB_ENUMERATION_PROPERTY.options.values())[0]
 
         properties_and_values = (
             (STUB_BOOLEAN_PROPERTY, True),
