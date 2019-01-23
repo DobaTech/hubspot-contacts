@@ -14,6 +14,7 @@
 #
 ##############################################################################
 
+from six import text_type
 from voluptuous import All
 from voluptuous import Any
 from voluptuous import Length

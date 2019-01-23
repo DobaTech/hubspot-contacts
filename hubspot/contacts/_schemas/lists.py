@@ -1,3 +1,4 @@
+from six import text_type
 from voluptuous import Schema
 from six import text_type
 

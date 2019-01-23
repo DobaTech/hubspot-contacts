@@ -20,6 +20,7 @@ from json import loads as json_deserialize
 from six import text_type
 
 from pyrecord import Record
+from six import text_type
 
 from hubspot.contacts import Contact
 from hubspot.contacts._constants import BATCH_SAVING_SIZE_LIMIT

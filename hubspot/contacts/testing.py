@@ -31,6 +31,8 @@ from json import dumps as json_serialize
 from math import ceil
 from six import text_type
 
+from six import text_type
+
 from hubspot.connection.testing import APICall
 from hubspot.connection.testing import SuccessfulAPICall
 from hubspot.connection.testing import UnsuccessfulAPICall
