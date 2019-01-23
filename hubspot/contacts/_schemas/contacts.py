@@ -19,6 +19,7 @@ from voluptuous import All
 from voluptuous import Any
 from voluptuous import Length
 from voluptuous import Schema
+from six import text_type
 
 from hubspot.contacts._schemas._validators import AnyListItemValidates
 from hubspot.contacts._schemas._validators import Constant

@@ -18,12 +18,14 @@ from pyrecord import Record
 from six import text_type
 from voluptuous import Optional
 from voluptuous import Schema
+from six import text_type
 
 from hubspot.contacts._constants import CONTACTS_API_SCRIPT_NAME
+from hubspot.contacts._schemas.properties import \
+    PROPERTY_RESPONSE_SCHEMA_DEFINITION
 from hubspot.contacts.properties import _build_property_from_data
 from hubspot.contacts.request_data_formatters.property_groups import \
     format_data_for_property_group
-
 
 PropertyGroup = Record.create_type(
     'PropertyGroup',
@@ -32,28 +34,23 @@ PropertyGroup = Record.create_type(
     'properties',
     display_name=None,
     properties=(),
-    )
-
+)
 
 _PROPERTY_GROUP_CREATION_SCHEMA = Schema(
     {'name': text_type, 'displayName': text_type},
     required=True,
     extra=True,
-    )
-
-
-_PROPERTY_SCHEMA = {}
+)
 
 _PROPERTY_GROUPS_RETRIEVAL_SCHEMA = Schema(
     [{
         'name': text_type,
         'displayName': text_type,
-        Optional('properties'): [_PROPERTY_SCHEMA],
-        }],
+        Optional('properties'): [PROPERTY_RESPONSE_SCHEMA_DEFINITION],
+    }],
     required=True,
     extra=True,
-    )
-
+)
 
 _PROPERTY_GROUPS_RETRIEVAL_URL_PATH = CONTACTS_API_SCRIPT_NAME + '/groups'
 
@@ -61,13 +58,13 @@ _PROPERTY_GROUPS_RETRIEVAL_URL_PATH = CONTACTS_API_SCRIPT_NAME + '/groups'
 def get_all_property_groups(connection):
     """
     Get the meta-information for all the property groups in the portal.
-    
+
     :rtype: :class:`list` of :class:`PropertyGroup` instances
     :raises hubspot.connection.exc.HubspotException:
-    
+
     End-point documentation:
     http://developers.hubspot.com/docs/methods/contacts/get_groups
-    
+
     """
     response_data = \
         connection.send_get_request(_PROPERTY_GROUPS_RETRIEVAL_URL_PATH)
@@ -80,14 +77,14 @@ def get_all_property_groups(connection):
 def create_property_group(property_group, connection):
     """
     Create ``property_group``.
-    
+
     :param Property property_: The property group to be created
     :return: :class:`PropertyGroup` instance as created by HubSpot
     :raises hubspot.connection.exc.HubspotException:
-    
+
     End-point documentation:
     http://developers.hubspot.com/docs/methods/contacts/create_group
-    
+
     """
     request_body_deserialization = \
         format_data_for_property_group(property_group)
@@ -96,7 +93,7 @@ def create_property_group(property_group, connection):
     response_data = connection.send_put_request(
         url_path,
         request_body_deserialization,
-        )
+    )
     property_group_data = _PROPERTY_GROUP_CREATION_SCHEMA(response_data)
     created_property_group = \
         _build_property_group_from_data(property_group_data)
@@ -107,7 +104,7 @@ def _build_property_group_from_data(property_group_data):
     property_group = PropertyGroup(
         property_group_data['name'],
         property_group_data['displayName'],
-        )
+    )
 
     if 'properties' in property_group_data:
         properties_data = property_group_data['properties']
@@ -116,18 +113,19 @@ def _build_property_group_from_data(property_group_data):
 
     return property_group
 
+
 def delete_property_group(property_group_name, connection):
     """
     Delete the property group named ``property_group_name``.
-    
+
     :param PropertyGroup property_group_name: The name of the property group to
         be deleted
     :return: ``None``
     :raises hubspot.connection.exc.HubspotException:
-    
+
     End-point documentation:
     http://developers.hubspot.com/docs/methods/contacts/delete_group
-    
+
     """
     url_path = CONTACTS_API_SCRIPT_NAME + '/groups/' + property_group_name
     connection.send_delete_request(url_path)

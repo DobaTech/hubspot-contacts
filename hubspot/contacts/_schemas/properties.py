@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2014, 2degrees Limited.
+# Copyright (c) 2014-2017, 2degrees Limited.
 # All Rights Reserved.
 #
 # This file is part of hubspot-contacts
@@ -17,30 +17,28 @@
 from six import text_type
 from voluptuous import Any
 from voluptuous import Schema
+from six import text_type
 
 from hubspot.contacts.properties import PROPERTY_TYPE_BY_NAME
 
-
-_PROPERTY_RESPONSE_SCHEMA_DEFINITION = {
+PROPERTY_RESPONSE_SCHEMA_DEFINITION = {
     'name': text_type,
     'type': Any(*PROPERTY_TYPE_BY_NAME.keys()),
     'options': [],
-    }
+}
 
 CREATE_PROPERTY_RESPONSE_SCHEMA = Schema(
-    _PROPERTY_RESPONSE_SCHEMA_DEFINITION,
+    PROPERTY_RESPONSE_SCHEMA_DEFINITION,
     required=True,
     extra=True,
-    )
-
+)
 
 _GET_ALL_PROPERTIES_RESPONSE_SCHEMA_DEFINITION = [
-    _PROPERTY_RESPONSE_SCHEMA_DEFINITION,
-    ]
-
+    PROPERTY_RESPONSE_SCHEMA_DEFINITION,
+]
 
 GET_ALL_PROPERTIES_RESPONSE_SCHEMA = Schema(
     _GET_ALL_PROPERTIES_RESPONSE_SCHEMA_DEFINITION,
     required=True,
     extra=True,
-    )
+)

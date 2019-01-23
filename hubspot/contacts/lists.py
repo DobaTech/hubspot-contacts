@@ -17,6 +17,7 @@
 from collections import defaultdict
 from decimal import Decimal
 from json import loads as json_deserialize
+from six import text_type
 
 from pyrecord import Record
 from six import text_type

@@ -29,6 +29,7 @@ from datetime import datetime
 from functools import partial
 from json import dumps as json_serialize
 from math import ceil
+from six import text_type
 
 from six import text_type
 
